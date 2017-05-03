@@ -10,7 +10,7 @@ class Board extends React.Component {
     this.state = {
       squares: Array(9).fill(null),
       xIsNext: true,
-      winner: false,
+      winner: null,
       moves: 0
 
     }
@@ -21,6 +21,9 @@ class Board extends React.Component {
     const newSquares = this.state.squares.slice()
     newSquares[i] = this.state.xIsNext ? 'X' : 'O';
     this.setState({ squares: newSquares, xIsNext: !this.state.xIsNext, moves: this.state.moves + 1})
+    if(this.calculateWinner(this.state.squares) || this.state.moves >= 9){
+      this.newGame()
+    }
     
   }
 
@@ -52,6 +55,16 @@ class Board extends React.Component {
   return null;
   }
 
+  newGame(){
+    this.setState({
+      squares: Array(9).fill(null),
+      xIsNext: true,
+      winner: null,
+      moves: 0
+
+    })
+  }
+
 
 
   render() {
@@ -59,7 +72,7 @@ class Board extends React.Component {
     let status;
     let draw;
     if(this.state.moves > 8 && winner === null){
-      draw = "   ITS A DRAW!"
+      draw = " ITS A DRAW!"
     }
     if(winner){
       status = "Player " + winner + " Wins!"
@@ -68,8 +81,6 @@ class Board extends React.Component {
     }
     return (
       <div>
-        <div className="status">{status}</div>
-        <div className="Draw">{draw}</div>
         <div className="row">
           {this.renderSquare(0)}
           {this.renderSquare(1)}
@@ -85,6 +96,9 @@ class Board extends React.Component {
           {this.renderSquare(7)}
           {this.renderSquare(8)}
         </div>
+        <div className="status">{status}</div>
+        <div className="Draw">{draw}</div>
+
       </div>
       )
   }
