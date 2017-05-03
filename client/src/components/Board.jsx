@@ -3,21 +3,59 @@ import ReactDOM from 'react-dom'
 import Square from './Square.jsx'
 
 class Board extends React.Component {
-  // constructor(props){
-  //   super(props);
-  //   this.state = {
+  constructor(props){
+    super(props);
+    this.state = {
+      squares: Array(9).fill(null),
+      xIsNext: true
+    }
+  }
 
-  //   }
-  // }
+
+  handleClick(i) {
+    const newSquares = this.state.squares.slice()
+    newSquares[i] = this.state.xIsNext ? 'X' : 'O';
+    this.setState({ squares: newSquares, xIsNext: !this.state.xIsNext })
+  }
+
+
   renderSquare(i){
-    return <Square />
+    return <Square 
+      value= { this.state.squares[i] } 
+      onClick={ () => this.handleClick(i) } />
+  }
+
+  calculateWinner(squares){
+    const winningLines = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
+  ]
+  for (let i=0; i < winningLines.length; i++){
+    const [a,b,c] = winningLines[i]
+      if(squares[a] && squares[a] === squares[b] && squares[a] === squares[c]){
+        return squares[a];
+      }
+    }
+  return null;
   }
 
   render() {
-    const player = 'Next player: X';
+    const winner = this.calculateWinner(this.state.squares)
+    let status;
+    if(winner){
+      status = "Player " + winner + "Wins"
+    } else {
+      status = 'Player Turn: ' + (this.state.xIsNext ? 'X' : 'O');
+    }
     return (
       <div>
-        <div className="player">{player}</div>
+        <div className="player">{winner}</div>
         <div className="row">
           {this.renderSquare(0)}
           {this.renderSquare(1)}

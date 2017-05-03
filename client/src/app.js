@@ -9,4 +9,6 @@ window.onload = function(){
     <Board/>,
     document.getElementById('app')
   );
+
+  calculateWinner(squares)
 }
