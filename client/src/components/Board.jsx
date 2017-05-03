@@ -2,12 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom'
 import Square from './Square.jsx'
 
+
+
 class Board extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       squares: Array(9).fill(null),
-      xIsNext: true
+      xIsNext: true,
+      winner: false,
+      moves: 0
+
     }
   }
 
@@ -15,7 +20,8 @@ class Board extends React.Component {
   handleClick(i) {
     const newSquares = this.state.squares.slice()
     newSquares[i] = this.state.xIsNext ? 'X' : 'O';
-    this.setState({ squares: newSquares, xIsNext: !this.state.xIsNext })
+    this.setState({ squares: newSquares, xIsNext: !this.state.xIsNext, moves: this.state.moves + 1})
+    
   }
 
 
@@ -40,22 +46,30 @@ class Board extends React.Component {
     const [a,b,c] = winningLines[i]
       if(squares[a] && squares[a] === squares[b] && squares[a] === squares[c]){
         return squares[a];
+
       }
     }
   return null;
   }
 
+
+
   render() {
     const winner = this.calculateWinner(this.state.squares)
     let status;
+    let draw;
+    if(this.state.moves > 8 && winner === null){
+      draw = "   ITS A DRAW!"
+    }
     if(winner){
-      status = "Player " + winner + "Wins"
+      status = "Player " + winner + " Wins!"
     } else {
       status = 'Player Turn: ' + (this.state.xIsNext ? 'X' : 'O');
     }
     return (
       <div>
-        <div className="player">{winner}</div>
+        <div className="status">{status}</div>
+        <div className="Draw">{draw}</div>
         <div className="row">
           {this.renderSquare(0)}
           {this.renderSquare(1)}

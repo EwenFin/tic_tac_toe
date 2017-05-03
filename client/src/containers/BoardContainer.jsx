@@ -1,20 +1,24 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-const GameLogic = require('../GameLogic.js')
+import Board from '../components/Board.jsx'
+
+
 
 class BoardContainer extends React.Component{
-  constructor(props){
-    super(props)
-    this.state ={
+  // constructor(props){
+  //   super(props)
+  //   this.state ={
 
-    }
-  } 
+  //   }
+  // } 
 
   render(){
     return(
       <div>
-
+        <Board/>
       </div>
       )
   }
 }
+
+export default BoardContainer

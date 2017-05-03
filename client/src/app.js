@@ -1,14 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Board from './components/Board.jsx'
-// import Game from './components/Game.jsx'
+import BoardContainer from './containers/BoardContainer.jsx'
+
 
 
 window.onload = function(){
   ReactDOM.render(
-    <Board/>,
+    <BoardContainer/>,
     document.getElementById('app')
-  );
+  )
 
-  calculateWinner(squares)
 }

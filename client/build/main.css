@@ -13,7 +13,7 @@ ol, ul {
   display: table;
 }
 
-.player {
+.status .draw {
   margin-bottom: 10px;
 }
 
